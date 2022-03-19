@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 
 const App = function() {
   //get data from api;
@@ -12,7 +13,7 @@ const App = function() {
 
   const onClickSimpleBtn = (character: string) => {
     if (character === "입력") {
-      if (inputData.length <= MAX_LENGTH+1) {
+      if (inputData.length <= MAX_LENGTH) {
         /* do nothing */
       }
       else {
@@ -47,7 +48,6 @@ const App = function() {
       }
       else {
         setInputData(inputData + character);
-        resultData[now] = inputData;
       }
     }
   };
@@ -55,7 +55,7 @@ const App = function() {
   const SimpleBtn = (prop: any) => {
     return (
       <button
-        className="btn btn-default"
+        className="kbd flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         onClick={() => onClickSimpleBtn(prop.character)}>
         {prop.character}
       </button>
@@ -74,7 +74,7 @@ const App = function() {
         {
           Object.entries(kbd).map(([idx, chars]) => {
             return(
-              <div key={"kbd" + idx}>
+              <div className="flex justify-center mb-1" key={"kbd" + idx}>
                 {
                   chars.map((ch, no) => {
                     return (<SimpleBtn key={"key"+idx+"_"+no} character={ch}/>);
@@ -95,11 +95,10 @@ const App = function() {
           resultData.map((result, no) => {
             let row = [];
             for (let i = 0; i < result.length; i++) {
-              console.log(result[i]);
               row.push(
                 <div key={"r"+i}
                 className="w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-2xl font-bold rounded bg-white border-slate-200">
-                  {result[i] === ' ' ? '-' : result[i]}
+                  {result[i] === ' ' ? ' ' : result[i]}
                 </div>
               );
             }
@@ -114,13 +113,24 @@ const App = function() {
     )
   }
 
+  const HeaderView = () => {
+    return (
+      <div className="flex justify-center items-center">
+        <h1 className="font-bold">글자 맞추기 - 한국어 6자</h1>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
       <header className="App-header">
       </header>
+    <HeaderView/>
     <ResultView/>
-    {inputData}
     <KeyboardView/>
+    <div className="flex justify-center">
+    {inputData}
+    </div>
     </div>
   );
 }
